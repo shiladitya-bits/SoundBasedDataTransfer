@@ -1,0 +1,57 @@
+import java.io.ByteArrayOutputStream;
+import java.nio.ByteBuffer;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.TargetDataLine;
+
+public class SoundDecoder {
+
+    public static void main(String[] args) {
+
+        ByteArrayOutputStream byteArrayOutputStream;
+        TargetDataLine targetDataLine;
+        boolean stopCapture = false;
+        byte tempBuffer[] = new byte[8000];
+
+        try {
+            byteArrayOutputStream = new ByteArrayOutputStream();
+            stopCapture = false;
+            while (!stopCapture) {
+                AudioFormat audioFormat = new AudioFormat(44100, 16, 1, true, false);
+                DataLine.Info dataLineInfo = new DataLine.Info(TargetDataLine.class, audioFormat);
+                targetDataLine = (TargetDataLine) AudioSystem.getLine(dataLineInfo);
+                targetDataLine.open(audioFormat);
+                targetDataLine.start();
+                int cnt = targetDataLine.read(tempBuffer, 0, tempBuffer.length);
+                byteArrayOutputStream.write(tempBuffer, 0, cnt);
+                byte[] bytearr = byteArrayOutputStream.toByteArray();
+                double[] dblArr = toDoubleArray(bytearr);
+
+                for (int i = 0; i < dblArr.length; i++) {
+                    double freq = dblArr[i];
+                    if (freq > 700 && freq < 1600) {
+                        System.out.print(dblArr[i] + ",");
+                    }
+
+                }
+
+                System.out.println();
+                targetDataLine.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // helper method for converting byte array to Double array
+    public static double[] toDoubleArray(byte[] byteArray) {
+        int times = Double.SIZE / Byte.SIZE;
+        double[] doubles = new double[byteArray.length / times];
+        for (int i = 0; i < doubles.length; i++) {
+            doubles[i] = ByteBuffer.wrap(byteArray, i * times, times).getDouble();
+        }
+        return doubles;
+    }
+}

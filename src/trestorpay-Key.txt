@@ -1,0 +1,11 @@
+{
+  "EncryptionVersion" : 1,
+  "PublicKey" : "069d31b7d29554150409cfc41fca76fdc9826c79209a511ca7124248bbaa5d54",
+  "CipherText" : "6c58961c3c254ffa72f4d8e5656903e942277bb0cf821f687b65ee3e12df24b86b8a01cff568f88404f48d5ce1e2e85f",
+  "Address" : "TNjkSnNPUWB8TuRE1sQmusrWr9btch5CLjJ",
+  "Type" : "Trestor Encrypted Key",
+  "Name" : "trestorpay",
+  "PasswordHint" : "trestor_bitpay",
+  "Salt" : "d91037dfb8b42a6cd78703019082e99a",
+  "Hash" : "7d11589205c85705f4ed24e91c73e684cd193989"
+}
