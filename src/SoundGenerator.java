@@ -19,7 +19,7 @@ public class SoundGenerator {
         // freqMap.put('a', 525D, 5D);
         double[] hzs = { 800, 1200 };
         double[] hzs2 = { 900, 1500 };
-        new SoundGenerator().multiplePlay(hzs, 0.5, 0.2);
+        new SoundGenerator().multiplePlay(hzs, 5.5, 0.2);
         Thread.sleep(500);
         // new SoundGenerator().multiplePlay(hzs2, 0.5, 0.2);
 
@@ -79,7 +79,7 @@ public class SoundGenerator {
      * The sample rate - 44,100 Hz for CD quality audio.
      */
 
-    final float sampleRate = 44100.0f;
+    final float sampleRate = 8000.0f;
     final int bitsPerRecord = 16;
     final int channels = 1;
     final boolean bigEndian = false;

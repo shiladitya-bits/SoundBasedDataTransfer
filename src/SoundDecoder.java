@@ -10,7 +10,7 @@ public class SoundDecoder {
 
     public static void main(String[] args) {
 
-        final float sampleRate = 44100.0f;
+        final float sampleRate = 8000.0f;
         final int bitsPerRecord = 16;
         final int channels = 1;
         final boolean bigEndian = true;
