@@ -29,15 +29,19 @@ public class SoundDecoder {
                 byte[] bytearr = byteArrayOutputStream.toByteArray();
                 double[] dblArr = toDoubleArray(bytearr);
 
+                boolean isPresent = false;
                 for (int i = 0; i < dblArr.length; i++) {
                     double freq = dblArr[i];
-                    if (freq > 700 && freq < 1600) {
+                    if (freq > 100 && freq < 5000) {
+                        isPresent = true;
                         System.out.print(dblArr[i] + ",");
                     }
 
                 }
 
-                System.out.println();
+                if (isPresent) {
+                    System.out.println();
+                }
                 targetDataLine.close();
             }
         } catch (Exception e) {

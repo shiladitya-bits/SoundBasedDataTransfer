@@ -18,8 +18,8 @@ public class SoundGenerator {
         // freqMap.put('a', 525D, 5D);
         double[] hzs = { 800, 1200 };
         double[] hzs2 = { 800, 1500 };
-        new SoundGenerator().multiplePlay(hzs, 5.5, 0.2);
-        new SoundGenerator().multiplePlay(hzs, 5.5, 0.2);
+        new SoundGenerator().multiplePlay(hzs, 0.5, 0.2);
+        new SoundGenerator().multiplePlay(hzs, 0.5, 0.2);
 
     }
 
