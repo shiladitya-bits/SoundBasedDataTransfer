@@ -10,6 +10,12 @@ public class SoundDecoder {
 
     public static void main(String[] args) {
 
+        final float sampleRate = 44100.0f;
+        final int bitsPerRecord = 16;
+        final int channels = 1;
+        final boolean bigEndian = true;
+        final boolean signed = true;
+
         ByteArrayOutputStream byteArrayOutputStream;
         TargetDataLine targetDataLine;
         boolean stopCapture = false;
@@ -19,7 +25,7 @@ public class SoundDecoder {
             byteArrayOutputStream = new ByteArrayOutputStream();
             stopCapture = false;
             while (!stopCapture) {
-                AudioFormat audioFormat = new AudioFormat(44100, 16, 1, true, false);
+                AudioFormat audioFormat = new AudioFormat(sampleRate, bitsPerRecord, channels, signed, bigEndian);
                 DataLine.Info dataLineInfo = new DataLine.Info(TargetDataLine.class, audioFormat);
                 targetDataLine = (TargetDataLine) AudioSystem.getLine(dataLineInfo);
                 targetDataLine.open(audioFormat);

@@ -9,7 +9,8 @@ import javax.sound.sampled.SourceDataLine;
 
 public class SoundGenerator {
 
-    public static void main(String[] args) throws LineUnavailableException {
+    public static void main(String[] args) throws LineUnavailableException,
+            InterruptedException {
 
         // sound(800, 500, 0.1);
         // sound(1000, 500, 0.1);
@@ -17,20 +18,21 @@ public class SoundGenerator {
         Map<Character, Double[]> freqMap = new HashMap<>();
         // freqMap.put('a', 525D, 5D);
         double[] hzs = { 800, 1200 };
-        double[] hzs2 = { 800, 1500 };
+        double[] hzs2 = { 900, 1500 };
         new SoundGenerator().multiplePlay(hzs, 0.5, 0.2);
-        new SoundGenerator().multiplePlay(hzs, 0.5, 0.2);
+        Thread.sleep(500);
+        // new SoundGenerator().multiplePlay(hzs2, 0.5, 0.2);
 
     }
 
     public void multiplePlay(double[] hzs, double duration, double amplitude) {
         amplitude = amplitude / hzs.length;
-        int N = (int) (SAMPLE_RATE * duration);
+        int N = (int) (sampleRate * duration);
         double sum;
         for (int i = 0; i <= N; i++) {
             sum = 0;
             for (int j = 0; j < hzs.length; j++)
-                sum += amplitude * Math.sin(2 * Math.PI * i * hzs[j] / SAMPLE_RATE);
+                sum += amplitude * Math.sin(2 * Math.PI * i * hzs[j] / sampleRate);
             this.play(sum);
         }
     }
@@ -76,10 +78,17 @@ public class SoundGenerator {
     /**
      * The sample rate - 44,100 Hz for CD quality audio.
      */
-    public final int SAMPLE_RATE = 44100;
 
+    final float sampleRate = 44100.0f;
+    final int bitsPerRecord = 16;
+    final int channels = 1;
+    final boolean bigEndian = false;
+    final boolean signed = true;
+
+    // public final float SAMPLE_RATE = 44100.0f;
+    //
     private final int BYTES_PER_SAMPLE = 2; // 16-bit audio
-    private final int BITS_PER_SAMPLE = 16; // 16-bit audio
+    // private final int BITS_PER_SAMPLE = 16; // 16-bit audio
     private final double MAX_16_BIT = Short.MAX_VALUE; // 32,767
     private final int SAMPLE_BUFFER_SIZE = 4096;
 
@@ -98,7 +107,7 @@ public class SoundGenerator {
         try {
             // 44,100 samples per second, 16-bit audio, mono, signed PCM, little
             // Endian
-            AudioFormat format = new AudioFormat((float) SAMPLE_RATE, BITS_PER_SAMPLE, 1, true, false);
+            AudioFormat format = new AudioFormat(sampleRate, bitsPerRecord, channels, signed, bigEndian);
             DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
 
             line = (SourceDataLine) AudioSystem.getLine(info);
